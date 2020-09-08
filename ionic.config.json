@@ -1,0 +1,7 @@
+{
+  "name": "SocialTest",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
