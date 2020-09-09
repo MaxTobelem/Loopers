@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { AngularFireDatabase } from '@angular/fire/database';
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -7,6 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePage  {
 
-  constructor() { }
-
+  constructor(
+    public afDB: AngularFireDatabase
+  ) {}
+  add() {
+    this.afDB.list('User/').push({
+      pseudo: 'max'
+    });
+  }
 }
