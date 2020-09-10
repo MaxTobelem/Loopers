@@ -30,17 +30,32 @@ export class ConnexionPage {
     });
   }
   login() {
-    this.afAuth.signInWithEmailAndPassword(this.dataUser.email, this.dataUser.password);
+    this.afAuth.signInWithEmailAndPassword(this.dataUser.email, this.dataUser.password)
+    .catch(err => {
+      console.log('Erreur: ' + err);
+      this.errorMail();
+    });
     this.dataUser = {
        email: '',
        password: ''
      };
   }
-  logout() {
-    this.afAuth.signOut();
+  async errorMail() {
+    const toast = await this.toastController.create({
+      message: 'Email ou mot de passe incorrect',
+      color: 'danger',
+      animated: true,
+      duration: 2000,
+      position: 'top'
+    });
+    toast.present();
   }
-  signUp() {
-    this.afAuth.createUserWithEmailAndPassword(this.dataUser.email, this.dataUser.password);
+  signup() {
+    this.afAuth.createUserWithEmailAndPassword(this.dataUser.email, this.dataUser.password)
+    .catch(err => {
+      console.log('Erreur: ' + err);
+      this.errorMail();
+    });
     this.dataUser = {
       email: '',
       password: ''

@@ -1,26 +1,21 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Connexion
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
 
 <ion-content>
-  <ion-header >
-  </ion-header>
-<div *ngIf="!connected">
-  <!-- Si l'utilisateur n'est pas connecté -->
-  <ion-item>
-    <ion-label><b>Email:</b></ion-label>
-    <ion-input type="email" [(ngModel)]="dataUser.email"></ion-input>
+  <div class="logo">
+    <ion-icon color="light" name="car-sport-sharp"></ion-icon>
+  </div>
+  <ion-item >
+    <ion-label color="light">E-mail</ion-label>
+    <ion-input color="light" type="mail" [(ngModel)]="dataUser.email" ></ion-input>
   </ion-item>
+  
   <ion-item>
-    <ion-label><b>Mot de passe:</b></ion-label>
-    <ion-input type="password" [(ngModel)]="dataUser.password"></ion-input>
+    <ion-label color="light">Mot de passe</ion-label>
+    <ion-input color="light" type="password" [(ngModel)]="dataUser.password" ></ion-input>
   </ion-item>
-  <ion-button expand="block" color="primary" (click)="login()">Connexion</ion-button>
-  <ion-button expand="block" color="tertiary" (click)="signUp()">Inscription</ion-button>
-</div>
-
+  <ion-item lines="none">
+    <ion-button color="light" slot="end" fill="clear">Mot de passe oublié ?</ion-button>
+  </ion-item>
+  <ion-button color="light" expand="block" shape="round" fill="outline"(click)="login()">Connexion</ion-button>
+  <br>
+  <ion-button color="dark" expand="block" shape="round" (click)="signup()">Inscription</ion-button>
 </ion-content>
