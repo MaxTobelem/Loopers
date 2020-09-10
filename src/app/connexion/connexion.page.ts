@@ -42,7 +42,7 @@ export class ConnexionPage {
   }
   async errorMail() {
     const toast = await this.toastController.create({
-      message: 'Email ou mot de passe incorrect',
+      message: 'E-mail ou mot de passe incorrect',
       color: 'danger',
       animated: true,
       duration: 2000,
