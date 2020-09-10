@@ -28,10 +28,6 @@ const routes: Routes = [
         loadChildren: () => import('../profil/profil.module').then(m => m.ProfilPageModule)
       },
       {
-        path: 'connexion',
-        loadChildren: () => import('../connexion/connexion.module').then(m => m.ConnexionPageModule)
-      },
-      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'

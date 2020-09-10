@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
     <ion-title>
       Connexion
@@ -7,13 +7,10 @@
 </ion-header>
 
 <ion-content>
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Connexion</ion-title>
-    </ion-toolbar>
+  <ion-header >
   </ion-header>
 <div *ngIf="!connected">
-  <!-- À afficher si l'utilisateur n'est pas connecté -->
+  <!-- Si l'utilisateur n'est pas connecté -->
   <ion-item>
     <ion-label><b>Email:</b></ion-label>
     <ion-input type="email" [(ngModel)]="dataUser.email"></ion-input>
@@ -23,12 +20,7 @@
     <ion-input type="password" [(ngModel)]="dataUser.password"></ion-input>
   </ion-item>
   <ion-button expand="block" color="primary" (click)="login()">Connexion</ion-button>
-  
-</div>
-
-<div *ngIf="connected">
-  <!-- Si l'utilisateur est connecté -->
-  <ion-button expand="block" color="danger" (click)="logout()">Déconnexion</ion-button>
+  <ion-button expand="block" color="tertiary" (click)="signUp()">Inscription</ion-button>
 </div>
 
 </ion-content>

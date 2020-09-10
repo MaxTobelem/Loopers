@@ -39,4 +39,11 @@ export class ConnexionPage {
   logout() {
     this.afAuth.signOut();
   }
+  signUp() {
+    this.afAuth.createUserWithEmailAndPassword(this.dataUser.email, this.dataUser.password);
+    this.dataUser = {
+      email: '',
+      password: ''
+    };
+ }
 }
