@@ -13,6 +13,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFirestoreModule } from '@angular/fire/firestore/';
 
 export const firebaseConfig = {
      apiKey: 'AIzaSyCvMEsfyRk3jQclhSOELwUNZ85tBnlO0VQ',
@@ -21,6 +22,7 @@ export const firebaseConfig = {
      projectId: 'nardo-8f0cd',
      storageBucket: 'nardo-8f0cd.appspot.com',
      messagingSenderId: '35818469011',
+     appId: '1:35818469011:web:316e85d2b99a5bffe3bf66',
 };
 
 @NgModule({
@@ -33,7 +35,8 @@ export const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    AngularFirestoreModule
   ],
   providers: [
     StatusBar,

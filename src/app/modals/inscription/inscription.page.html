@@ -1,0 +1,53 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Inscription
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Inscription</ion-title>
+      <ion-buttons  slot="end">
+        <ion-button (click)="closeModal()">
+          <ion-icon name="close-outline"></ion-icon>
+        </ion-button>
+    </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <form>
+
+  <ion-item>
+    <ion-label>Prénom</ion-label>
+    <ion-input [(ngModel)]="dataUser.prenom" type="text" required ></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Nom</ion-label>
+    <ion-input [(ngModel)]="dataUser.nom" type="text" required ></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Pseudo</ion-label>
+    <ion-input [(ngModel)]="dataUser.pseudo" type="text" required ></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>E-mail</ion-label>
+    <ion-input [(ngModel)]="dataUser.email" type="mail" required ></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Mot de passe</ion-label>
+    <ion-input [(ngModel)]="dataUser.password" type="password" required minlength=6 ></ion-input>
+  </ion-item>
+
+  <ion-button (click)="signup()" expand="block">S'inscrire</ion-button>
+  
+</form>
+
+</ion-content> 

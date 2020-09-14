@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { ToastController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
+import { InscriptionPage } from '../modals/inscription/inscription.page';
 
 @Component({
   selector: 'app-connexion',
@@ -9,6 +11,7 @@ import { ToastController } from '@ionic/angular';
   styleUrls: ['./connexion.page.scss'],
 })
 export class ConnexionPage {
+  dataReturned: any;
   dataUser = {
     email: '',
     password: ''
@@ -17,7 +20,8 @@ export class ConnexionPage {
   constructor(
     public toastController: ToastController,
     public afDB: AngularFireDatabase,
-    public afAuth: AngularFireAuth
+    public afAuth: AngularFireAuth,
+    public modalController: ModalController
   ) {
     this.afAuth.authState.subscribe(auth => {
       if (!auth) {
@@ -61,4 +65,20 @@ export class ConnexionPage {
       password: ''
     };
  }
+ async openInscription() {
+  const modal = await this.modalController.create({
+    component: InscriptionPage,
+    swipeToClose: true,
+    keyboardClose: true,
+  });
+
+  modal.onDidDismiss().then((dataReturned) => {
+    if (dataReturned !== null) {
+      this.dataReturned = dataReturned.data;
+    }
+  });
+
+  return await modal.present();
+}
+
 }
