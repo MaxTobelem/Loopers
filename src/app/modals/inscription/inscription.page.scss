@@ -1,0 +1,15 @@
+
+.error-message {
+    color: var(--ion-color-danger);
+}
+ion-content {
+    --ion-background-color: linear-gradient(#0F2027, #203A43,#2C5364);
+}
+ion-item,
+ion-header,
+ion-toolbar,
+ion-title,
+ion-label,
+ion-input {
+    --background: transparent;
+}

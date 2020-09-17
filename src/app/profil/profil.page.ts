@@ -16,10 +16,8 @@ export class ProfilPage {
       if (!auth) {
         console.log('non connecté');
       } else {
-        console.log('connecté: ' + auth.uid);
-        this.userId = auth.uid;
-        this.mail = auth.email;
-        this.method = auth.providerData[0].providerId;
+        console.log('connecté: ' + auth.email);
+        console.log('connecté: ' + auth.email);
       }
     });
   }

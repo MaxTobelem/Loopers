@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header >
   <ion-toolbar>
     <ion-title>
       Inscription
@@ -12,41 +12,66 @@
     <ion-toolbar>
       <ion-title size="large">Inscription</ion-title>
       <ion-buttons  slot="end">
-        <ion-button (click)="closeModal()">
+        <ion-button color="dark" (click)="closeModal()">
           <ion-icon name="close-outline"></ion-icon>
         </ion-button>
     </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
-  <form>
+  <form [formGroup]="registrationForm" (ngSubmit)="submit()">
 
   <ion-item>
-    <ion-label>Prénom</ion-label>
-    <ion-input [(ngModel)]="dataUser.prenom" type="text" required ></ion-input>
+    <ion-label position="floating">Prénom</ion-label>
+    <ion-input formControlName="prenom" inputmode="text"  ></ion-input>
   </ion-item>
+  <div *ngFor="let error of errorMessages.prenom">
+    <ng-container *ngIf="prenom.hasError(error.type) && (prenom.dirty || prenom.touched)">
+      <small class="error-message">{{error.message}}</small>
+    </ng-container>
+  </div>
+  
+  <ion-item>
+    <ion-label position="floating">Nom</ion-label>
+    <ion-input autocapitalize formControlName="nom" inputmode="text"  ></ion-input>
+  </ion-item>
+  <div *ngFor="let error of errorMessages.nom">
+    <ng-container *ngIf="nom.hasError(error.type) && (nom.dirty || nom.touched)">
+      <small class="error-message">{{error.message}}</small>
+    </ng-container>
+  </div>
 
   <ion-item>
-    <ion-label>Nom</ion-label>
-    <ion-input [(ngModel)]="dataUser.nom" type="text" required ></ion-input>
+    <ion-label position="floating">Pseudo</ion-label>
+    <ion-input formControlName="pseudo" inputmode="text"  ></ion-input>
   </ion-item>
+  <div *ngFor="let error of errorMessages.pseudo">
+    <ng-container *ngIf="pseudo.hasError(error.type) && (pseudo.dirty || pseudo.touched)">
+      <small class="error-message">{{error.message}}</small>
+    </ng-container>
+  </div>
 
   <ion-item>
-    <ion-label>Pseudo</ion-label>
-    <ion-input [(ngModel)]="dataUser.pseudo" type="text" required ></ion-input>
+    <ion-label position="floating">E-mail</ion-label>
+    <ion-input formControlName="email" inputmode="mail" type="email" ></ion-input>
   </ion-item>
+  <div *ngFor="let error of errorMessages.mail">
+    <ng-container *ngIf="mail.hasError(error.type) && (mail.dirty || mail.touched)">
+      <small class="error-message">{{error.message}}</small>
+    </ng-container>
+  </div>
 
   <ion-item>
-    <ion-label>E-mail</ion-label>
-    <ion-input [(ngModel)]="dataUser.email" type="mail" required ></ion-input>
+    <ion-label position="floating">Mot de passe</ion-label>
+    <ion-input formControlName="password" inputmode="password"  type=password ></ion-input>
   </ion-item>
-
-  <ion-item>
-    <ion-label>Mot de passe</ion-label>
-    <ion-input [(ngModel)]="dataUser.password" type="password" required minlength=6 ></ion-input>
-  </ion-item>
-
-  <ion-button (click)="signup()" expand="block">S'inscrire</ion-button>
+  <div *ngFor="let error of errorMessages.password">
+    <ng-container *ngIf="password.hasError(error.type) && (password.dirty || password.touched)">
+      <small class="error-message">{{error.message}}</small>
+    </ng-container>
+  </div>
+  <br>  <br>
+  <ion-button  color="dark" [disabled]="!registrationForm.valid" type="submit" expand="block" shape="round" >S'inscrire</ion-button>
   
 </form>
 

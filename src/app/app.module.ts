@@ -14,6 +14,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFirestoreModule } from '@angular/fire/firestore/';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 export const firebaseConfig = {
      apiKey: 'AIzaSyCvMEsfyRk3jQclhSOELwUNZ85tBnlO0VQ',
@@ -29,6 +30,8 @@ export const firebaseConfig = {
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
+    FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
