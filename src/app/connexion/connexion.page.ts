@@ -25,10 +25,8 @@ export class ConnexionPage {
   ) {
     this.afAuth.authState.subscribe(auth => {
       if (!auth) {
-        console.log('non connecté');
         this.connected = false;
       } else {
-        console.log('connecté: ' + auth.uid);
         this.connected = true;
       }
     });
@@ -54,17 +52,6 @@ export class ConnexionPage {
     });
     toast.present();
   }
-  signup() {
-    this.afAuth.createUserWithEmailAndPassword(this.dataUser.email, this.dataUser.password)
-    .catch(err => {
-      console.log('Erreur: ' + err);
-      this.errorMail();
-    });
-    this.dataUser = {
-      email: '',
-      password: ''
-    };
- }
  async openInscription() {
   const modal = await this.modalController.create({
     component: InscriptionPage,

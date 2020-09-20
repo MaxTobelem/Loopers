@@ -3,7 +3,9 @@ import { ModalController, NavParams } from '@ionic/angular';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { FormBuilder,Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-inscription',
@@ -11,22 +13,6 @@ import { FormBuilder,Validators } from '@angular/forms';
   styleUrls: ['./inscription.page.scss'],
 })
 export class InscriptionPage implements OnInit {
-  get prenom() {
-    return this.registrationForm.get('prenom');
-  }
-  get nom() {
-    return this.registrationForm.get('nom');
-  }
-  get pseudo() {
-    return this.registrationForm.get('pseudo');
-  }
-  get email() {
-    return this.registrationForm.get('email');
-  }
-  get password() {
-    return this.registrationForm.get('password');
-  }
-
   public errorMessages = {
     prenom: [
       { type: 'required', message: 'Prénom est obligatoire' },
@@ -65,6 +51,27 @@ export class InscriptionPage implements OnInit {
   modalTitle: string;
   modelId: number;
 
+  getPostEntry( postTitle: string ): Observable<any> {
+  return this.firestore.collection<any> ( 'Users' , ref => ref.where ( 'email' , '==' , 4 ) ).valueChanges ();
+  }
+
+  get prenom() {
+    return this.registrationForm.get('prenom');
+  }
+  get nom() {
+    return this.registrationForm.get('nom');
+  }
+  get pseudo() {
+    return this.registrationForm.get('pseudo');
+  }
+  get email() {
+    return this.registrationForm.get('email');
+  }
+  get password() {
+    return this.registrationForm.get('password');
+  }
+
+
   constructor(
     private modalController: ModalController,
     private navParams: NavParams,
@@ -72,8 +79,8 @@ export class InscriptionPage implements OnInit {
     public afDB: AngularFireDatabase,
     public afAuth: AngularFireAuth,
     public firestore: AngularFirestore
-  ) { }
-
+  ) {
+  }
   ngOnInit() {
     console.table(this.navParams);
     this.modelId = this.navParams.data.paramID;
@@ -86,9 +93,8 @@ export class InscriptionPage implements OnInit {
   }
 
   public submit() {
-    console.log(this.registrationForm.value.password);
     this.afAuth.createUserWithEmailAndPassword(this.registrationForm.value.email, this.registrationForm.value.password);
-    this.firestore.collection('Users').add({
+    this.firestore.collection('Users').doc(this.registrationForm.value.email).set({
       prenom: this.registrationForm.value.prenom,
       nom: this.registrationForm.value.nom,
       pseudo: this.registrationForm.value.pseudo,
