@@ -4,6 +4,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { ToastController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import { InscriptionPage } from '../modals/inscription/inscription.page';
+import { IonRouterOutlet } from '@ionic/angular';
 
 @Component({
   selector: 'app-connexion',
@@ -11,6 +12,7 @@ import { InscriptionPage } from '../modals/inscription/inscription.page';
   styleUrls: ['./connexion.page.scss'],
 })
 export class ConnexionPage {
+  
   dataReturned: any;
   dataUser = {
     email: '',
@@ -21,7 +23,8 @@ export class ConnexionPage {
     public toastController: ToastController,
     public afDB: AngularFireDatabase,
     public afAuth: AngularFireAuth,
-    public modalController: ModalController
+    public modalController: ModalController,
+    private routerOutlet: IonRouterOutlet,
   ) {
     this.afAuth.authState.subscribe(auth => {
       if (!auth) {
@@ -53,10 +56,12 @@ export class ConnexionPage {
     toast.present();
   }
  async openInscription() {
+  document.body.classList.toggle('dark', false);
   const modal = await this.modalController.create({
     component: InscriptionPage,
     swipeToClose: true,
     keyboardClose: true,
+    presentingElement: this.routerOutlet.nativeEl
   });
 
   modal.onDidDismiss().then((dataReturned) => {

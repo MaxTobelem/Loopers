@@ -30,10 +30,12 @@ export const firebaseConfig = {
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
+    IonicModule.forRoot({
+      swipeBackEnabled: false
+  }),
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,
-    IonicModule.forRoot(),
     AppRoutingModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
