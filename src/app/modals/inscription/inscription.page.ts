@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
+import { LoadingController, ModalController, NavParams } from '@ionic/angular';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -78,7 +78,8 @@ export class InscriptionPage implements OnInit {
     private formBuilder: FormBuilder,
     public afDB: AngularFireDatabase,
     public afAuth: AngularFireAuth,
-    public firestore: AngularFirestore
+    public firestore: AngularFirestore,
+    public loadingController: LoadingController
   ) {
   }
   ngOnInit() {
@@ -92,11 +93,18 @@ export class InscriptionPage implements OnInit {
     await this.modalController.dismiss(onClosedData);
   }
 
-  public submit() {
+  async submit() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Veuillez patienter...',
+      duration: 1000,
+      showBackdrop: true,
+    });
+    await loading.present();
     this.afAuth.createUserWithEmailAndPassword(this.registrationForm.value.email, this.registrationForm.value.password);
     this.firestore.collection('Users').doc(this.registrationForm.value.email).set({
       prenom: this.registrationForm.value.prenom,
-      nom: this.registrationForm.value.nom,
+      nom: this.registrationForm.value.nom.toUpperCase(),
       pseudo: this.registrationForm.value.pseudo,
       email: this.registrationForm.value.email
       });

@@ -5,14 +5,13 @@ import { ToastController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import { InscriptionPage } from '../modals/inscription/inscription.page';
 import { IonRouterOutlet } from '@ionic/angular';
-
+import { LoadingController } from '@ionic/angular';
 @Component({
   selector: 'app-connexion',
   templateUrl: './connexion.page.html',
   styleUrls: ['./connexion.page.scss'],
 })
 export class ConnexionPage {
-  
   dataReturned: any;
   dataUser = {
     email: '',
@@ -25,6 +24,7 @@ export class ConnexionPage {
     public afAuth: AngularFireAuth,
     public modalController: ModalController,
     private routerOutlet: IonRouterOutlet,
+    public loadingController: LoadingController
   ) {
     this.afAuth.authState.subscribe(auth => {
       if (!auth) {
@@ -34,7 +34,14 @@ export class ConnexionPage {
       }
     });
   }
-  login() {
+  async login() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Veuillez patienter...',
+      duration: 1000,
+      animated: true
+    });
+    await loading.present();
     this.afAuth.signInWithEmailAndPassword(this.dataUser.email, this.dataUser.password)
     .catch(err => {
       console.log('Erreur: ' + err);
@@ -44,6 +51,8 @@ export class ConnexionPage {
        email: '',
        password: ''
      };
+
+    await loading.present();
   }
   async errorMail() {
     const toast = await this.toastController.create({
