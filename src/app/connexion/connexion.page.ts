@@ -4,6 +4,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { ToastController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import { InscriptionPage } from '../modals/inscription/inscription.page';
+import { PasswordresetPage } from '../modals/passwordreset/passwordreset.page';
 import { IonRouterOutlet } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 @Component({
@@ -45,7 +46,7 @@ export class ConnexionPage {
     this.afAuth.signInWithEmailAndPassword(this.dataUser.email, this.dataUser.password)
     .catch(err => {
       console.log('Erreur: ' + err);
-      this.errorMail();
+      this.errorLogin();
     });
     this.dataUser = {
        email: '',
@@ -54,13 +55,14 @@ export class ConnexionPage {
 
     await loading.present();
   }
-  async errorMail() {
+  async errorLogin() {
     const toast = await this.toastController.create({
       message: 'E-mail ou mot de passe incorrect',
       color: 'danger',
       animated: true,
       duration: 2000,
-      position: 'top'
+      position: 'top',
+      keyboardClose : true
     });
     toast.present();
   }
@@ -81,5 +83,21 @@ export class ConnexionPage {
 
   return await modal.present();
 }
+async openPasswordReset() {
+  document.body.classList.toggle('dark', false);
+  const modal = await this.modalController.create({
+    component: PasswordresetPage,
+    swipeToClose: true,
+    keyboardClose: true,
+    presentingElement: this.routerOutlet.nativeEl
+  });
 
+  modal.onDidDismiss().then((dataReturned) => {
+    if (dataReturned !== null) {
+      this.dataReturned = dataReturned.data;
+    }
+  });
+
+  return await modal.present();
+}
 }

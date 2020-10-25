@@ -13,6 +13,10 @@ const routes: Routes = [
   {
     path: 'inscription',
     loadChildren: () => import('./modals/inscription/inscription.module').then( m => m.InscriptionPageModule)
+  },
+  {
+    path: 'passwordreset',
+    loadChildren: () => import('./modals/passwordreset/passwordreset.module').then( m => m.PasswordresetPageModule)
   }
 ];
 @NgModule({
