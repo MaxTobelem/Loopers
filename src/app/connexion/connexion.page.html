@@ -3,19 +3,37 @@
   <div class="logo">
     <ion-icon color="light" name="car-sport-sharp"></ion-icon>
   </div>
-  <ion-item >
-    <ion-label color="light">E-mail</ion-label>
-    <ion-input color="light" type="mail" [(ngModel)]="dataUser.email" ></ion-input>
-  </ion-item>
+  <form [formGroup]="registrationForm" (ngSubmit)="login()">
+
+    <ion-item>
+      <ion-label >E-mail</ion-label>
+      <ion-input formControlName="email" inputmode="mail" type="email" ></ion-input>
+    </ion-item>
+    <div *ngFor="let error of errorMessages.mail">
+      <ng-container *ngIf="mail.hasError(error.type) && (mail.dirty || mail.touched)">
+        <small class="error-message">{{error.message}}</small>
+      </ng-container>
+    </div>
   
-  <ion-item>
-    <ion-label color="light">Mot de passe</ion-label>
-    <ion-input color="light" type="password" [(ngModel)]="dataUser.password" ></ion-input>
-  </ion-item>
+    <ion-item>
+      <ion-label >Mot de passe</ion-label>
+      <ion-input formControlName="password" inputmode="password"  type=password ></ion-input>
+    </ion-item>
+    <div *ngFor="let error of errorMessages.password">
+      <ng-container *ngIf="password.hasError(error.type) && (password.dirty || password.touched)">
+        <small class="error-message">{{error.message}}</small>
+      </ng-container>
+    </div>
+    <br>  <br>
+
   <ion-item lines="none">
     <ion-button color="light" slot="end" fill="clear" (click)="openPasswordReset()">Mot de passe oublié ?</ion-button>
   </ion-item>
-  <ion-button color="light" expand="block" shape="round" fill="outline"(click)="login()">Connexion</ion-button>
+  <br>
+    <ion-button  color="light" [disabled]="!registrationForm.valid" type="submit" fill="outline" expand="block" shape="round" >Connexion</ion-button>
+    
+  </form>
+  
   <br>
   <ion-button color="dark" expand="block" shape="round" (click)="openInscription()">Inscription</ion-button>
 </ion-content>

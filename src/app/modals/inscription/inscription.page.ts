@@ -100,6 +100,7 @@ export class InscriptionPage implements OnInit {
       spinner: 'circular' ,
       duration: 1000,
       showBackdrop: true,
+      animated : true,
     });
     this.afAuth.createUserWithEmailAndPassword(this.registrationForm.value.email, this.registrationForm.value.password)
     .then( () => {
@@ -110,6 +111,13 @@ export class InscriptionPage implements OnInit {
         pseudo: this.registrationForm.value.pseudo,
         email: this.registrationForm.value.email
         });
+      this.registrationForm.patchValue({
+        prenom: '',
+        nom: '',
+        pseudo: '',
+        email: '',
+        password: ''
+      });
       this.modalController.dismiss();
     })
     .catch(err => {

@@ -1,6 +1,10 @@
 ion-content {
     --ion-background-color: linear-gradient(#0F2027, #203A43,#2C5364);
 }
+.error-message {
+    color: var(--ion-color-danger);
+    padding-left: 10px;
+}
 .logo {
     position: relative;
     height: 250px;
@@ -13,7 +17,14 @@ ion-content {
     transform: translate(-50%, -50%);
 }
 ion-item,
+ion-header,
+ion-toolbar,
+ion-title,
 ion-label,
 ion-input {
     --background: transparent;
+    color: white;
+}
+ion-toolbar{
+    --border-color:transparent;
 }
