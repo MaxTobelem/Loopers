@@ -67,6 +67,16 @@ export class PasswordresetPage implements OnInit {
     this.afAuth.sendPasswordResetEmail(email).then(async () => {
       loading.present();
       this.modalController.dismiss();
+      const toast = await this.toastController.create({
+        // tslint:disable-next-line: quotemark
+        message: "Lien envoyé avec succès",
+        color: 'success',
+        animated: true,
+        duration: 2000,
+        position: 'top',
+        keyboardClose : true
+      });
+      toast.present();
     })
     .catch(async err => {
       this.errorEmail();
