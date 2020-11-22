@@ -17,13 +17,14 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 export const firebaseConfig = {
-     apiKey: 'AIzaSyCvMEsfyRk3jQclhSOELwUNZ85tBnlO0VQ',
-     authDomain: 'nardo-8f0cd.firebaseapp.com',
-     databaseURL: 'https://nardo-8f0cd.firebaseio.com',
-     projectId: 'nardo-8f0cd',
-     storageBucket: 'nardo-8f0cd.appspot.com',
-     messagingSenderId: '35818469011',
-     appId: '1:35818469011:web:316e85d2b99a5bffe3bf66',
+  apiKey: 'AIzaSyCvMEsfyRk3jQclhSOELwUNZ85tBnlO0VQ',
+  authDomain: 'nardo-8f0cd.firebaseapp.com',
+  databaseURL: 'https://nardo-8f0cd.firebaseio.com',
+  projectId: 'nardo-8f0cd',
+  storageBucket: 'nardo-8f0cd.appspot.com',
+  messagingSenderId: '35818469011',
+  appId: '1:35818469011:web:316e85d2b99a5bffe3bf66',
+  measurementId: 'G-HWN0TC8QD5'
 };
 
 @NgModule({

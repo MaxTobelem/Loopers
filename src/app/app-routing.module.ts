@@ -7,15 +7,15 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
-    path: 'connexion',
+    path: 'login',
     loadChildren: () => import('./connexion/connexion.module').then( m => m.ConnexionPageModule)
   },
   {
-    path: 'inscription',
+    path: 'signup',
     loadChildren: () => import('./modals/inscription/inscription.module').then( m => m.InscriptionPageModule)
   },
   {
-    path: 'passwordreset',
+    path: 'login/passwordreset',
     loadChildren: () => import('./modals/passwordreset/passwordreset.module').then( m => m.PasswordresetPageModule)
   }
 ];
