@@ -1,22 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { ToastController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import { InscriptionPage } from '../modals/inscription/inscription.page';
 import { PasswordresetPage } from '../modals/passwordreset/passwordreset.page';
+import { ConfirmPasswordResetPage } from '../modals/confirm-password-reset/confirm-password-reset.page';
 import { IonRouterOutlet } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Validators, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-connexion',
   templateUrl: './connexion.page.html',
   styleUrls: ['./connexion.page.scss'],
 })
-export class ConnexionPage {
-
+export class ConnexionPage implements OnInit{
+  oobCode: string;
   get email() {
     return this.registrationForm.get('email');
   }
@@ -33,6 +35,7 @@ export class ConnexionPage {
     private routerOutlet: IonRouterOutlet,
     public loadingController: LoadingController,
     private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
     public firestore: AngularFirestore,
   ) {
     this.afAuth.authState.subscribe(auth => {
@@ -185,5 +188,38 @@ export class ConnexionPage {
   });
 
     return await modal.present();
+}
+
+async openConfirmPasswordReset(test) {
+  document.body.classList.toggle('dark', false);
+  const modal = await this.modalController.create({
+    component: ConfirmPasswordResetPage,
+    componentProps: {
+      oobCode: test,
+    },
+    swipeToClose: true,
+    keyboardClose: true,
+    presentingElement: this.routerOutlet.nativeEl
+  });
+
+  modal.onDidDismiss().then((dataReturned) => {
+  if (dataReturned !== null) {
+    this.dataReturned = dataReturned.data;
+  }
+});
+
+  return await modal.present();
+}
+ngOnInit() {
+  this.route.queryParams.subscribe(params => {
+    // tslint:disable-next-line: no-string-literal
+    this.oobCode = params['oobCode'];
+});
+  this.afAuth.checkActionCode(this.oobCode).then( () => {
+  this.openConfirmPasswordReset(this.oobCode);
+}).catch(err => {
+  console.log('erreur');
+});
+
 }
 }

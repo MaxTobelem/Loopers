@@ -13,6 +13,7 @@ import { ConnexionPage } from './connexion.page';
     CommonModule,
     ReactiveFormsModule,
     IonicModule,
+    FormsModule,
     ConnexionPageRoutingModule
   ],
   declarations: [ConnexionPage]

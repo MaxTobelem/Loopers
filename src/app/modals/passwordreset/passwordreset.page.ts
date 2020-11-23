@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController, ModalController, NavParams } from '@ionic/angular';
+import { IonRouterOutlet, LoadingController, ModalController, NavParams } from '@ionic/angular';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -43,7 +43,7 @@ export class PasswordresetPage implements OnInit {
     public afAuth: AngularFireAuth,
     public firestore: AngularFirestore,
     public loadingController: LoadingController,
-    private activateRoute: ActivatedRoute,
+    private activatedActivated: ActivatedRoute,
     public toastController: ToastController,
   ) { }
 
@@ -94,5 +94,6 @@ export class PasswordresetPage implements OnInit {
     });
     toast.present();
   }
+
 }
 

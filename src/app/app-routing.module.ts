@@ -7,17 +7,21 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
-    path: 'login',
+    path: 'connexion',
     loadChildren: () => import('./connexion/connexion.module').then( m => m.ConnexionPageModule)
   },
   {
-    path: 'signup',
+    path: 'inscription',
     loadChildren: () => import('./modals/inscription/inscription.module').then( m => m.InscriptionPageModule)
   },
   {
-    path: 'login/passwordreset',
+    path: 'passwordreset',
     loadChildren: () => import('./modals/passwordreset/passwordreset.module').then( m => m.PasswordresetPageModule)
-  }
+  },
+  {
+    path: 'confirmpasswordreset',
+    loadChildren: () => import('./modals/confirm-password-reset/confirm-password-reset.module').then( m => m.ConfirmPasswordResetPageModule)
+  },
 ];
 @NgModule({
   imports: [

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { IonRouterOutlet, Platform } from '@ionic/angular';
 
@@ -13,6 +13,7 @@ export class AppComponent {
     private router: Router,
     private afAuth: AngularFireAuth,
     private platform: Platform,
+    private route: ActivatedRoute,
   ) {
     this.initializeApp();
   }
@@ -20,7 +21,10 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.afAuth.authState.subscribe(auth => {
         if (!auth) {
+          // tslint:disable-next-line: no-string-literal
+          if (!(this.route.snapshot.queryParams['oobCode'])) {
           this.router.navigateByUrl('/connexion');
+          }
         } else {
           this.router.navigateByUrl('/');
         }

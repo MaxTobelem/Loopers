@@ -16,6 +16,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+
 export const firebaseConfig = {
   apiKey: 'AIzaSyCvMEsfyRk3jQclhSOELwUNZ85tBnlO0VQ',
   authDomain: 'nardo-8f0cd.firebaseapp.com',
