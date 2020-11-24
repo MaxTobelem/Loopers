@@ -3,7 +3,7 @@ import { LoadingController, ModalController, NavParams } from '@ionic/angular';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { ToastController } from '@ionic/angular';
@@ -14,48 +14,6 @@ import { ToastController } from '@ionic/angular';
   styleUrls: ['./inscription.page.scss'],
 })
 export class InscriptionPage implements OnInit {
-
-  public errorMessages = {
-    prenom: [
-      { type: 'required', message: 'Prénom est obligatoire' },
-      { type: 'maxlength', message: 'La longueur maximale est de 100 caractères' },
-      { type: 'minlength', message: 'La longueur minimale est de 2 caractères' }
-    ],
-    nom: [
-      { type: 'required', message: 'Nom est obligatoire' },
-      { type: 'maxlength', message: 'La longueur maximale est de 100 caractères' },
-      { type: 'minlength', message: 'La longueur minimale est de 2 caractères' }
-    ],
-    pseudo: [
-      { type: 'required', message: 'Pseudo est obligatoire' },
-      { type: 'maxlength', message: 'La longueur maximale est de 20 caractères' },
-      { type: 'minlength', message: 'La longueur minimale est de 4 caractères' }
-    ],
-    email: [
-      { type: 'required', message: 'E-mail est obligatoire' },
-      { type: 'maxlength', message: 'La longueur maximale est de 100 caractères' },
-      { type: 'email',  message: 'Adresse mail invalide '}
-    ],
-    password: [
-      { type: 'required', message: 'Mot de passe est obligatoire' },
-      { type: 'minlength', message: 'La longueur minimale est de 6 caractères' }
-    ]
-  };
-  registrationForm = this.formBuilder.group({
-    prenom: ['' , [ Validators.required,  Validators.minLength(2), Validators.maxLength(100)]],
-    nom: ['' , [ Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
-    pseudo: ['' , [ Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
-    email: ['' , [ Validators.required, Validators.minLength(5), Validators.maxLength(100), Validators.email]],
-    password: ['' , [ Validators.required, Validators.minLength(6)]],
-  });
-
-
-  modalTitle: string;
-  modelId: number;
-
-  getPostEntry( postTitle: string ): Observable<any> {
-  return this.firestore.collection<any> ( 'Users' , ref => ref.where ( 'email' , '==' , 4 ) ).valueChanges ();
-  }
 
   get prenom() {
     return this.registrationForm.get('prenom');
@@ -84,10 +42,64 @@ export class InscriptionPage implements OnInit {
     public loadingController: LoadingController,
     private activateRoute: ActivatedRoute,
     public toastController: ToastController,
-  ) {
+  ) {this.registrationForm = formBuilder.group({
+    prenom: ['' , [ Validators.required,  Validators.minLength(2), Validators.maxLength(100)]],
+    nom: ['' , [ Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+    pseudo: ['' , [ Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
+    email: ['' , [ Validators.required, Validators.maxLength(100), Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
+    password: ['' , [ Validators.required, Validators.minLength(6)]],
+    confirmpassword: ['' , [ Validators.required, Validators.minLength(6)]],
+  }, {validator: InscriptionPage.passwordsMatch});
+  }
+  registrationForm: FormGroup;
+  public errorMessages = {
+    prenom: [
+      { type: 'required', message: 'Prénom est obligatoire' },
+      { type: 'maxlength', message: 'La longueur maximale est de 100 caractères' },
+      { type: 'minlength', message: 'La longueur minimale est de 2 caractères' }
+    ],
+    nom: [
+      { type: 'required', message: 'Nom est obligatoire' },
+      { type: 'maxlength', message: 'La longueur maximale est de 100 caractères' },
+      { type: 'minlength', message: 'La longueur minimale est de 2 caractères' }
+    ],
+    pseudo: [
+      { type: 'required', message: 'Pseudo est obligatoire' },
+      { type: 'maxlength', message: 'La longueur maximale est de 20 caractères' },
+      { type: 'minlength', message: 'La longueur minimale est de 4 caractères' }
+    ],
+    email: [
+      { type: 'required', message: 'E-mail est obligatoire' },
+      { type: 'maxlength', message: 'La longueur maximale est de 100 caractères' },
+      { type: 'pattern',  message: 'Adresse e-mail invalide '}
+    ],
+    password: [
+      { type: 'required', message: 'Mot de passe est obligatoire' },
+      { type: 'minlength', message: 'La longueur minimale est de 6 caractères' }
+    ],
+    confirmpassword: [
+      { type: 'required', message: 'Mot de passe est obligatoire' },
+      { type: 'minlength', message: 'La longueur minimale est de 6 caractères' }
+    ]
+  };
+
+
+  modalTitle: string;
+  modelId: number;
+  static passwordsMatch(cg: FormGroup): {[err: string]: any} {
+    const password = cg.get('password');
+    const confirmpassword = cg.get('confirmpassword');
+    const rv: {[error: string]: any} = {};
+    if ((password.touched || confirmpassword.touched) && password.value !== confirmpassword.value) {
+      rv.passwordMismatch = true;
+    }
+    return rv;
+  }
+
+  getPostEntry( postTitle: string ): Observable<any> {
+  return this.firestore.collection<any> ( 'Users' , ref => ref.where ( 'email' , '==' , 4 ) ).valueChanges ();
   }
   ngOnInit() {}
-
   async closeModal() {
     const onClosedData = 'Wrapped Up!';
     await this.modalController.dismiss(onClosedData);
@@ -121,7 +133,6 @@ export class InscriptionPage implements OnInit {
       this.modalController.dismiss();
     })
     .catch(err => {
-      console.log('Erreur: ' + err);
       this.errorEmail();
     });
   }

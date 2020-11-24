@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Validators, FormBuilder } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 
@@ -10,6 +10,7 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./confirm-password-reset.page.scss'],
 })
 export class ConfirmPasswordResetPage implements OnInit {
+  frmSetNewPassword: FormGroup;
   oobCode: string;
   public errorMessages = {
     password: [
@@ -21,10 +22,6 @@ export class ConfirmPasswordResetPage implements OnInit {
       { type: 'minlength', message: 'La longueur minimale est de 6 caractères' }
     ]
   };
-  frmSetNewPassword = this.fb.group({
-    password: ['' , [ Validators.required, Validators.minLength(6)]],
-    confirmPassword: ['' , [ Validators.required, Validators.minLength(6)]],
-  });
   get password() {
     return this.frmSetNewPassword.get('password');
   }
@@ -37,7 +34,20 @@ export class ConfirmPasswordResetPage implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router
-  ) { }
+  ) {this.frmSetNewPassword = fb.group({
+    password: ['' , [ Validators.required, Validators.minLength(6)]],
+    confirmpassword: ['' , [ Validators.required, Validators.minLength(6)]],
+  }, {validator: ConfirmPasswordResetPage.passwordsMatch});
+  }
+  static passwordsMatch(cg: FormGroup): {[err: string]: any} {
+    const password = cg.get('password');
+    const confirmpassword = cg.get('confirmpassword');
+    const rv: {[error: string]: any} = {};
+    if ((password.touched || confirmpassword.touched) && password.value !== confirmpassword.value) {
+      rv.passwordMismatch = true;
+    }
+    return rv;
+  }
   async setPassword(){
     this.route.queryParams.subscribe(params => {
       // tslint:disable-next-line: no-string-literal
