@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreCollection, QuerySnapshot } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { MenuController } from '@ionic/angular';
+
 @Component({
   selector: 'app-profil',
   templateUrl: './profil.page.html',
@@ -18,7 +18,8 @@ export class ProfilPage {
 
   constructor(
     public afAuth: AngularFireAuth,
-    public firestore: AngularFirestore
+    public firestore: AngularFirestore,
+    private menu: MenuController
   ) {
     this.afAuth.authState.subscribe(auth => {
       if (auth) {
@@ -35,6 +36,10 @@ export class ProfilPage {
   }
     });
 
+  }
+
+  openMenu() {
+    this.menu.open('menu');
   }
 
   logout() {

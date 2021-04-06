@@ -22,6 +22,10 @@ const routes: Routes = [
     path: 'confirmpasswordreset',
     loadChildren: () => import('./modals/confirm-password-reset/confirm-password-reset.module').then( m => m.ConfirmPasswordResetPageModule)
   },
+  {
+    path: 'home',
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+  },
 ];
 @NgModule({
   imports: [
