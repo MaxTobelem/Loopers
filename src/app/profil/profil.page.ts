@@ -21,6 +21,7 @@ export class ProfilPage {
     public firestore: AngularFirestore,
     private menu: MenuController
   ) {
+    // tslint:disable-next-line: deprecation
     this.afAuth.authState.subscribe(auth => {
       if (auth) {
     this.firestore.collection('Users').doc(auth.email).get().toPromise().then((doc) => {

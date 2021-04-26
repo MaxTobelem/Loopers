@@ -1,0 +1,41 @@
+
+<ion-header >
+  <ion-toolbar >
+    <ion-title > CarBox </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-item>
+    <ion-label>Niveau d'essence</ion-label>
+    <ion-note slot="end" color="success">{{dataOBD.essence}} %</ion-note>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Tension batterie</ion-label>
+    <ion-note slot="end" color="success">{{dataOBD.batterie}} V</ion-note>
+  </ion-item>
+  <ion-item>
+    <ion-label>Kilométrage</ion-label>
+    <ion-note slot="end" color="primary">{{dataOBD.kilometrage}} km</ion-note>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Codes défauts</ion-label>
+    <ion-note slot="end" color="danger">{{dataOBD.codeerr}}</ion-note>
+  </ion-item>
+  <ion-item>
+    <ion-label>Pression des pneus</ion-label>
+    <ion-note slot="end" color="success">{{dataOBD.pneus}}</ion-note>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Centralisation</ion-label>
+    <ion-note slot="end" color="success">{{dataOBD.centralisation}}</ion-note>
+  </ion-item>
+
+ 
+</ion-content>
