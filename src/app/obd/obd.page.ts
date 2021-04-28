@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 
@@ -7,7 +7,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
   templateUrl: './obd.page.html',
   styleUrls: ['./obd.page.scss'],
 })
-export class ObdPage  {
+export class ObdPage implements OnInit {
   dataOBD = {
     essence: '',
     batterie: '',
@@ -20,7 +20,14 @@ export class ObdPage  {
     public afAuth: AngularFireAuth,
     public firestore: AngularFirestore
   ){
-    // tslint:disable-next-line: deprecation
+  }
+
+  ngOnInit() {
+    this.doRefresh(null);
+  }
+
+  doRefresh(event) {
+        // tslint:disable-next-line: deprecation
     this.afAuth.authState.subscribe(auth => {
       if (auth) {
     this.firestore.collection('OBD').doc(auth.email).get().toPromise().then((doc) => {
@@ -31,14 +38,19 @@ export class ObdPage  {
         this.dataOBD.codeerr = doc.get('CodeErr');
         this.dataOBD.pneus = doc.get('Pneus');
         this.dataOBD.centralisation = doc.get('Centralisation');
+        if (event) {
+        event.target.complete();
+        }
     } else {
         // doc.data() will be undefined in this case
         console.log('No such document!');
+        if (event) {
+        event.target.complete();
+        }
     }
    });
   }
     });
 
   }
- 
 }

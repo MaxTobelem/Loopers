@@ -1,5 +1,6 @@
 
 <ion-header >
+  
   <ion-toolbar >
     <ion-title > CarBox </ion-title>
     <ion-buttons slot="start">
@@ -8,8 +9,12 @@
 
   </ion-toolbar>
 </ion-header>
+
 <ion-content>
-  <ion-item>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-item >
     <ion-label>Niveau d'essence</ion-label>
     <ion-note slot="end" color="success">{{dataOBD.essence}} %</ion-note>
   </ion-item>
