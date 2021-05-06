@@ -16,6 +16,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyCvMEsfyRk3jQclhSOELwUNZ85tBnlO0VQ',
@@ -47,6 +49,8 @@ export const firebaseConfig = {
   ],
   providers: [
     StatusBar,
+    Geolocation,
+    NativeGeocoder,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

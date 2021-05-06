@@ -64,6 +64,9 @@ this.firestore.collection('OBD').doc(auth.email).get().toPromise().then((doc) =>
   if (doc.get('NbCodeErr') < 1) {
     this.hideOBDError();
 }
+else{
+  this.showOBDError();
+}
 });
 }
 });
@@ -73,5 +76,11 @@ hideOBDError(){
   const obdnote = (document.getElementById('noteErrorCode') as HTMLInputElement);
   obd.disabled = true;
   obdnote.setAttribute('color', 'primary');
+}
+showOBDError(){
+  const obd = (document.getElementById('buttonErrorCode') as HTMLInputElement);
+  const obdnote = (document.getElementById('noteErrorCode') as HTMLInputElement);
+  obd.disabled = false;
+  obdnote.setAttribute('color', 'danger');
 }
 }
