@@ -11,8 +11,10 @@
 </ion-header>
 
 <ion-content>
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullMin="100" pullMax="200">
+    <ion-refresher-content
+    pullingIcon="arrow-down-outline" 
+    refreshingSpinner="crescent"></ion-refresher-content>
   </ion-refresher>
   <ion-item >
     <ion-label>Niveau d'essence</ion-label>
@@ -28,13 +30,13 @@
     <ion-note slot="end" color="primary">{{dataOBD.kilometrage}} km</ion-note>
   </ion-item>
 
-  <ion-item>
+  <ion-item  button [routerLink]="['/obderrorcode']" routerDirection="forward" id ="buttonErrorCode">
     <ion-label>Codes défauts</ion-label>
-    <ion-note slot="end" color="danger">{{dataOBD.codeerr}}</ion-note>
+    <ion-note slot="end" color="danger" id="noteErrorCode">{{dataOBD.nbcodeerr}}</ion-note>
   </ion-item>
   <ion-item>
-    <ion-label>Pression des pneus</ion-label>
-    <ion-note slot="end" color="success">{{dataOBD.pneus}}</ion-note>
+    <ion-label>Vitesse</ion-label>
+    <ion-note slot="end" color="primary">{{dataOBD.vitesse}} (rpm)</ion-note>
   </ion-item>
 
   <ion-item>

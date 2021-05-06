@@ -46,6 +46,10 @@ const routes: Routes = [
     path: 'help',
     loadChildren: () => import('./help/help.module').then( m => m.HelpPageModule)
   },
+  {
+    path: 'obderrorcode',
+    loadChildren: () => import('./obderrorcode/obderrorcode.module').then( m => m.ObderrorcodePageModule)
+  },
 ];
 @NgModule({
   imports: [
