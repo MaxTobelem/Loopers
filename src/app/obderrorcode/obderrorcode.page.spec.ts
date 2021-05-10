@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { ObderrorcodePage } from './obderrorcode.page';
@@ -7,7 +7,7 @@ describe('ObderrorcodePage', () => {
   let component: ObderrorcodePage;
   let fixture: ComponentFixture<ObderrorcodePage>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ObderrorcodePage ],
       imports: [IonicModule.forRoot()]
