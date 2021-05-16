@@ -1,14 +1,16 @@
-<ion-header [translucent]="true">
 
-  <ion-toolbar color="warning">
-    <ion-button (click)="loadMap()" shape="round" color="dark">
-      <ion-icon slot="start" name="locate"></ion-icon>
-      Where I Am
-    </ion-button>
-    <ion-title slot="end">Google Map</ion-title>
+
+<ion-header >
+  
+  <ion-toolbar >
+    <ion-title > Map </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+
   </ion-toolbar>
-
 </ion-header>
+
 
 <ion-content [fullscreen]="true">
 
@@ -45,6 +47,9 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-
+  <ion-button (click)="loadMap()" shape="round" color="dark">
+    <ion-icon slot="start" name="locate"></ion-icon>
+    Where I Am
+  </ion-button>
 
 </ion-content>

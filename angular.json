@@ -14,20 +14,20 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "allowedCommonJsDependencies": [
-                            "lodash",
-                            "firebase",
-                            "@angular/common/locales/fr",
-                            "lodash/dropRight",
-                            "@firebase/app",
-                            "firebase/app",
-                            "@firebase/database",
-                            "@firebase/firestore",
-                            "@firebase/functions",
-                            "@firebase/performance",
-                            "@firebase/remote-config",
-                            "@firebase/auth"
-                        ],
+            "allowedCommonJsDependencies": [
+              "lodash",
+              "firebase",
+              "@angular/common/locales/fr",
+              "lodash/dropRight",
+              "@firebase/app",
+              "firebase/app",
+              "@firebase/database",
+              "@firebase/firestore",
+              "@firebase/functions",
+              "@firebase/performance",
+              "@firebase/remote-config",
+              "@firebase/auth"
+            ],
             "outputPath": "www",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -47,10 +47,12 @@
             ],
             "styles": [
               {
-                "input": "src/theme/variables.scss"
+                "input": "src/theme/variables.scss",
+                "inject": true
               },
               {
-                "input": "src/global.scss"
+                "input": "src/global.scss",
+                "inject": true
               }
             ],
             "scripts": []
@@ -66,7 +68,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
