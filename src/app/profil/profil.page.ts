@@ -5,6 +5,7 @@ import { MenuController } from '@ionic/angular';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFireStorage } from '@angular/fire/storage';
 
+
 @Component({
   selector: 'app-profil',
   templateUrl: './profil.page.html',
@@ -20,10 +21,18 @@ export class ProfilPage implements OnInit{
     ville: '',
     pays: '',
     description: '',
-    plaque: '',
+    plaque: [],
     profil: '/Users/',
     voiture: ''
  };
+
+ dataCar = {
+  plaque: '',
+  marque: '',
+  modele: '',
+  annee: '',
+};
+
 
 
   constructor(
@@ -31,11 +40,39 @@ export class ProfilPage implements OnInit{
     public firestore: AngularFirestore,
     private menu: MenuController,
     public afDB: AngularFireDatabase,
-    public afSG: AngularFireStorage
+    public afSG: AngularFireStorage,
   ) {
     // tslint:disable-next-line: deprecation
-    this.afAuth.authState.subscribe(auth => {
-      if (auth) {
+}
+
+  ngOnInit() {
+  this.getUser();
+  this.checkOBD();
+
+}
+  openMenu() {
+    this.menu.open('menu');
+}
+  getPlaque(){
+this.afAuth.authState.subscribe(auth => {
+  if (this.dataUser.plaque.length !== 0) {
+  this.firestore.collection('Cars').doc(this.dataUser.plaque[0]).get().toPromise().then((doc) => {
+    if (doc.exists) {
+      this.dataCar.plaque = doc.get('plaque');
+      this.dataCar.marque = doc.get('marque');
+      this.dataCar.modele = doc.get('modele');
+      this.dataCar.annee = doc.get('annee');
+  } else {
+      console.log('No such document!');
+  }
+});
+}
+});
+}
+
+  getUser(){
+  this.afAuth.authState.subscribe(auth => {
+    if (auth) {
     this.firestore.collection('Users').doc(auth.email).get().toPromise().then((doc) => {
       if (doc.exists) {
         this.dataUser.nom = doc.get('nom');
@@ -49,26 +86,25 @@ export class ProfilPage implements OnInit{
         this.dataUser.voiture = this.dataUser.profil;
         this.dataUser.profil = this.dataUser.profil.concat('/profil.jpg');
         this.dataUser.voiture = this.dataUser.voiture.concat('/Cars/' + this.dataUser.plaque + '/car1.jpg');
-        this.getImagesStorage();
+        this.getImageProfil();
+        if (this.dataUser.plaque.length !== 0){
+          this.getImagesStorage();
+          this.getPlaque();
+        }
     } else {
         // doc.data() will be undefined in this case
         console.log('No such document!');
     }
-   });
   }
-    });
-
-  }
-  ngOnInit() {
-  this.checkOBD();
+  );
 }
-  openMenu() {
-    this.menu.open('menu');
-  }
+});
+}
+
 
   logout() {
     this.afAuth.signOut();
-  }
+}
 
   checkOBD() {
     // tslint:disable-next-line: deprecation
@@ -82,21 +118,24 @@ this.firestore.collection('OBD').doc(auth.email).get().toPromise().then((doc) =>
 }
 });
 }
-hideOBD(){
+
+  hideOBD(){
   const obd = (document.getElementById('buttonOBD') as HTMLInputElement);
   obd.disabled = true;
   const CarBox = (document.getElementById('CarBox') as HTMLInputElement);
   CarBox.innerText = 'CarBox - Premium';
 }
 
-
-getImagesStorage() {
+  getImageProfil() {
   this.afSG.ref(this.dataUser.profil).getDownloadURL().subscribe(imgUrl1 => {
     this.imagesP.push({
       name: 'Profil',
       url: imgUrl1
     });
   });
+}
+
+  getImagesStorage() {
   this.afSG.ref(this.dataUser.voiture).getDownloadURL().subscribe(imgUrl2 => {
     console.log(imgUrl2);
     this.imagesV.push({
@@ -105,6 +144,7 @@ getImagesStorage() {
     });
   });
 }
-  }
+
+}
 
 

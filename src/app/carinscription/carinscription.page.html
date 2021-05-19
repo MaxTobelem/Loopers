@@ -1,0 +1,170 @@
+
+<ion-header >
+  
+  <ion-toolbar >
+    <ion-title > Inscription </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <form [formGroup]="registrationForm" (ngSubmit)="submit()">
+    <ion-item>
+      <ion-label position="floating">Plaque d'immatriculation 
+        </ion-label>
+      <ion-input autocapitalize formControlName="plaque" placeholder="ex : AA-123-BB" inputmode="text"  ></ion-input>
+    </ion-item>
+    <div *ngFor="let error of errorMessages.plaque">
+      <ng-container *ngIf="plaque.hasError(error.type) && (plaque.dirty || plaque.touched)">
+        <small class="error-message">{{error.message}}</small>
+      </ng-container>
+    </div>
+
+    <ion-item>
+      <ion-label position="floating">Marque</ion-label>
+      <ion-input autocapitalize formControlName="marque" inputmode="text"  ></ion-input>
+    </ion-item>
+    <div *ngFor="let error of errorMessages.marque">
+      <ng-container *ngIf="marque.hasError(error.type) && (marque.dirty || marque.touched)">
+        <small class="error-message">{{error.message}}</small>
+      </ng-container>
+    </div>
+    
+    <ion-item>
+      <ion-label position="floating">Modèle</ion-label>
+      <ion-input autocapitalize formControlName="modele" inputmode="text"  ></ion-input>
+    </ion-item>
+    <div *ngFor="let error of errorMessages.modele">
+      <ng-container *ngIf="modele.hasError(error.type) && (modele.dirty || modele.touched)">
+        <small class="error-message">{{error.message}}</small>
+      </ng-container>
+    </div>
+  
+    <ion-item>
+      <ion-label position="floating">Type de véhicule</ion-label>
+      <ion-select formControlName="typevehicule" interface="popover">
+        <ion-select-option value="4x4">4x4</ion-select-option>
+        <ion-select-option value="berline">Berline</ion-select-option>
+        <ion-select-option value="break">Break</ion-select-option>
+        <ion-select-option value="cabriolet">Cabriolet</ion-select-option>
+        <ion-select-option value="citadine">Citadine</ion-select-option>
+        <ion-select-option value="coupe">Coupé</ion-select-option>
+        <ion-select-option value="hypercar">Hypercar</ion-select-option>
+        <ion-select-option value="monospace">Monospace</ion-select-option>
+        <ion-select-option value="moto">Moto</ion-select-option>
+        <ion-select-option value="roadster">Roadster</ion-select-option>
+        <ion-select-option value="sportive">Sportive</ion-select-option>
+        <ion-select-option value="SUV">SUV</ion-select-option>
+        <ion-select-option value="van">Van</ion-select-option>
+        <ion-select-option value="autre">Autre</ion-select-option>
+      </ion-select>
+    </ion-item>
+      <div *ngFor="let error of errorMessages.typevehicule">
+        <ng-container *ngIf="typevehicule.hasError(error.type) && (typevehicule.dirty || typevehicule.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+
+    <ion-item>
+      <ion-label position="floating">Année</ion-label>
+      <ion-input formControlName="annee" type="number" ></ion-input>
+    </ion-item>
+    <div *ngFor="let error of errorMessages.annee">
+      <ng-container *ngIf="annee.hasError(error.type) && (annee.dirty || annee.touched)">
+        <small class="error-message">{{error.message}}</small>
+      </ng-container>
+    </div>
+
+    <ion-item>
+      <ion-label position="floating">Nombre de propriétaires</ion-label>
+      <ion-input formControlName="nbproprietaire" type="number" ></ion-input>
+    </ion-item>
+    <div *ngFor="let error of errorMessages.nbproprietaire">
+      <ng-container *ngIf="nbproprietaire.hasError(error.type) && (nbproprietaire.dirty || nbproprietaire.touched)">
+        <small class="error-message">{{error.message}}</small>
+      </ng-container>
+    </div>
+
+    <ion-item>
+      <ion-label position="floating">Couleur</ion-label>
+      <ion-input formControlName="couleur" inputmode="text"  ></ion-input>
+    </ion-item>
+    <div *ngFor="let error of errorMessages.couleur">
+      <ng-container *ngIf="couleur.hasError(error.type) && (couleur.dirty || couleur.touched)">
+        <small class="error-message">{{error.message}}</small>
+      </ng-container>
+    </div>
+
+    <ion-item>
+      <ion-label position="floating">Kilométrage</ion-label>
+      <ion-input formControlName="kilometrage" type="number"></ion-input>
+    </ion-item>
+    <div *ngFor="let error of errorMessages.kilometrage">
+      <ng-container *ngIf="kilometrage.hasError(error.type) && (kilometrage.dirty || kilometrage.touched)">
+        <small class="error-message">{{error.message}}</small>
+      </ng-container>
+    </div>
+  
+    <ion-item>
+      <ion-label position="floating">Prix</ion-label>
+      <ion-input formControlName="prix" type="number"></ion-input>
+    </ion-item>
+    <div *ngFor="let error of errorMessages.prix">
+      <ng-container *ngIf="prix.hasError(error.type) && (prix.dirty || prix.touched)">
+        <small class="error-message">{{error.message}}</small>
+      </ng-container>
+    </div>
+
+    <ion-item>
+    <ion-label position="floating">Energie</ion-label>
+    <ion-select formControlName="energie" interface="popover">
+      <ion-select-option value="bioethanol">Bioéthanol</ion-select-option>
+      <ion-select-option value="diesel">Diesel</ion-select-option>
+      <ion-select-option value="electrique">Electrique</ion-select-option>
+      <ion-select-option value="essence">Essence</ion-select-option>
+      <ion-select-option value="hybride">Hybride</ion-select-option>
+      <ion-select-option value="hydrogene">Hydrogène</ion-select-option>
+      <ion-select-option value="gpl">GPL</ion-select-option>
+      <ion-select-option value="autre">Autre</ion-select-option>
+    </ion-select>
+  </ion-item>
+    <div *ngFor="let error of errorMessages.energie">
+      <ng-container *ngIf="energie.hasError(error.type) && (energie.dirty || energie.touched)">
+        <small class="error-message">{{error.message}}</small>
+      </ng-container>
+    </div>
+  
+    <ion-item>
+      <ion-label position="floating">Transmission</ion-label>
+      <ion-select formControlName="transmission" interface="popover">
+        <ion-select-option value="automatique">Automatique</ion-select-option>
+        <ion-select-option value="manuelle">Manuelle</ion-select-option>
+        <ion-select-option value="robotise">Robotisée</ion-select-option>
+        <ion-select-option value="autre">Autre</ion-select-option>
+      </ion-select>
+    </ion-item>
+      <div *ngFor="let error of errorMessages.transmission">
+        <ng-container *ngIf="transmission.hasError(error.type) && (transmission.dirty || transmission.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+  
+      <ion-item>
+        <ion-label position="floating">Description</ion-label>
+        <ion-textarea formControlName="description"  rows="6" cols="20" ></ion-textarea>
+      </ion-item>
+      <div *ngFor="let error of errorMessages.description">
+        <ng-container *ngIf="description.hasError(error.type) && (description.dirty || description.touched)">
+          <small class="error-message">{{error.message}}</small>
+        </ng-container>
+      </div>
+
+      <br>  <br>
+      <ion-button  color="dark" [disabled]="!registrationForm.valid" type="submit" expand="block" shape="round" >Ajouter</ion-button>
+      
+  </form>
+</ion-content>

@@ -42,6 +42,7 @@ export class InscriptionPage implements OnInit {
     public loadingController: LoadingController,
     private activateRoute: ActivatedRoute,
     public toastController: ToastController,
+  // tslint:disable-next-line: deprecation
   ) {this.registrationForm = formBuilder.group({
     prenom: ['' , [ Validators.required,  Validators.minLength(2), Validators.maxLength(100)]],
     nom: ['' , [ Validators.required, Validators.minLength(2), Validators.maxLength(100)]],

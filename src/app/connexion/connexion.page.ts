@@ -155,7 +155,7 @@ export class ConnexionPage implements OnInit{
   }
 
   async openInscription() {
-  document.body.classList.toggle('dark', false);
+
   const modal = await this.modalController.create({
     component: InscriptionPage,
     swipeToClose: true,
@@ -173,7 +173,6 @@ export class ConnexionPage implements OnInit{
   }
 
   async openPasswordReset() {
-    document.body.classList.toggle('dark', false);
     const modal = await this.modalController.create({
       component: PasswordresetPage,
       swipeToClose: true,
@@ -191,7 +190,6 @@ export class ConnexionPage implements OnInit{
 }
 
 async openConfirmPasswordReset(test) {
-  document.body.classList.toggle('dark', false);
   const modal = await this.modalController.create({
     component: ConfirmPasswordResetPage,
     componentProps: {
@@ -222,4 +220,5 @@ ngOnInit() {
 });
 
 }
+
 }

@@ -54,6 +54,14 @@ const routes: Routes = [
     path: 'mapobd',
     loadChildren: () => import('./mapobd/mapobd.module').then( m => m.MapobdPageModule)
   },
+  {
+    path: 'carmenu',
+    loadChildren: () => import('./modals/carmenu/carmenu.module').then( m => m.CarmenuPageModule)
+  },
+  {
+    path: 'carinscription',
+    loadChildren: () => import('./carinscription/carinscription.module').then( m => m.CarinscriptionPageModule)
+  },
 ];
 @NgModule({
   imports: [
