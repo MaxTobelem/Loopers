@@ -10,9 +10,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 export class CarmenuPage  implements OnInit{
   plaquelist = [''];
   carlist = [''];
-  dataUser = {
-    plaque: [],
- };
+
 
   constructor(
     public afAuth: AngularFireAuth,
@@ -26,15 +24,16 @@ ngOnInit(){
 
 getPlaque(){
   this.afAuth.authState.subscribe(auth => {
-    if (this.dataUser.plaque.length !== 0) {
-    this.firestore.collection('Cars').doc(this.dataUser.plaque[0]).get().toPromise().then((doc) => {
-      if (doc.exists) {
-  console.log(this.carlist);
-  this.carlist[0] = doc.get('marque') + ' ' + doc.get('modele') + ' / (' + doc.get('plaque') + ')';
-    } else {
-        console.log('No such document!');
-    }
-  });
+    if (this.plaquelist.length !== 0) {
+      for (let i = 0; i <= (this.plaquelist.length - 1); i++){
+        this.firestore.collection('Cars').doc(this.plaquelist[i]).get().toPromise().then((doc) => {
+          if (doc.exists) {
+      this.carlist[i] = doc.get('marque') + ' ' + doc.get('modele') + ' / (' + doc.get('plaque') + ')';
+        } else {
+            console.log('No such document!');
+        }
+      });
+      }
   }
   });
   }
@@ -44,8 +43,8 @@ getPlaque(){
       if (auth) {
       this.firestore.collection('Users').doc(auth.email).get().toPromise().then((doc) => {
         if (doc.exists) {
-          this.dataUser.plaque = doc.get('plaque');
-          if (this.dataUser.plaque.length !== 0){
+          this.plaquelist = doc.get('plaque');
+          if (this.plaquelist.length !== 0){
             this.getPlaque();
           }
       } else {

@@ -12,7 +12,7 @@ import { LoadingController, ToastController } from '@ionic/angular';
 })
 export class CarinscriptionPage implements OnInit {
   dataUser = {
-    plaque: [],
+    plaque: [''],
     email: ''
   };
 
@@ -75,22 +75,7 @@ export class CarinscriptionPage implements OnInit {
     description: ['' , [Validators.maxLength(300)]],
     nbproprietaire: ['' , [ Validators.required, Validators.minLength(1),  Validators.maxLength(10), Validators.min(1)]],
   });
-     this.afAuth.authState.subscribe(auth => {
-    if (auth) {
-  this.firestore.collection('Users').doc(auth.email).get().toPromise().then((doc) => {
-    if (doc.exists) {
-      this.dataUser.email = auth.email;
-      console.log(this.dataUser.email);
-      if (doc.get('plaque').exists !== undefined){
-      this.dataUser.plaque = doc.get('plaque');
-      }
-  } else {
-      // doc.data() will be undefined in this case
-      console.log('No such document!');
-  }
- });
-}
-  });
+     this.getUser();
   }
   registrationForm: FormGroup;
 
@@ -155,6 +140,23 @@ export class CarinscriptionPage implements OnInit {
 
   ngOnInit() {
   }
+
+
+   getUser(){
+      this.afAuth.authState.subscribe(auth => {
+        if (auth) {
+        this.firestore.collection('Users').doc(auth.email).get().toPromise().then((doc) => {
+          if (doc.exists) {
+          this.dataUser.email = auth.email;
+          this.dataUser.plaque = doc.get('plaque');
+        } else {
+            console.log('No such document!');
+        }
+      }
+      );
+    }
+    });
+    }
   async submit() {
      const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
@@ -165,7 +167,9 @@ export class CarinscriptionPage implements OnInit {
       animated : true,
     });
      loading.present();
+     console.log(this.dataUser.plaque);
      this.dataUser.plaque.push(this.registrationForm.value.plaque);
+     console.log(this.dataUser.plaque);
      this.firestore.collection('Users').doc(this.dataUser.email).update({
         plaque: this.dataUser.plaque
         });

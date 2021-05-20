@@ -83,12 +83,12 @@
 
   <ion-row>
     <ion-col size="12">
-      <ion-item>
-        <ion-thumbnail *ngFor="let image of imagesV" slot="end">
+      <ion-item *ngFor="let string of carlist; let i = index;let image of imagesV">
+        <ion-thumbnail slot="end">
           <ion-img [src]="image.url" alt="voiture"></ion-img>
         </ion-thumbnail>
-        <ion-label>
-          {{dataCar.marque}} {{dataCar.modele}}
+        <ion-label >
+          {{carlist[i]}}
         </ion-label>
       </ion-item>
     </ion-col>

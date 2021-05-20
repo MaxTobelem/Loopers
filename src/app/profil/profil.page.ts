@@ -14,6 +14,9 @@ import { AngularFireStorage } from '@angular/fire/storage';
 export class ProfilPage implements OnInit{
   imagesP = [];
   imagesV = [];
+  plaquelist = [''];
+  carlist = [''];
+  carlinklist = [''];
   dataUser = {
     nom: '',
     prenom: '',
@@ -21,7 +24,6 @@ export class ProfilPage implements OnInit{
     ville: '',
     pays: '',
     description: '',
-    plaque: [],
     profil: '/Users/',
     voiture: ''
  };
@@ -55,18 +57,16 @@ export class ProfilPage implements OnInit{
 }
   getPlaque(){
 this.afAuth.authState.subscribe(auth => {
-  if (this.dataUser.plaque.length !== 0) {
-  this.firestore.collection('Cars').doc(this.dataUser.plaque[0]).get().toPromise().then((doc) => {
+  if (this.plaquelist.length !== 0) {
+  for (let i = 0; i <= (this.plaquelist.length - 1); i++){
+  this.firestore.collection('Cars').doc(this.plaquelist[i]).get().toPromise().then((doc) => {
     if (doc.exists) {
-      this.dataCar.plaque = doc.get('plaque');
-      this.dataCar.marque = doc.get('marque');
-      this.dataCar.modele = doc.get('modele');
-      this.dataCar.annee = doc.get('annee');
+      this.carlist[i] = doc.get('marque') + ' ' + doc.get('modele');
   } else {
       console.log('No such document!');
   }
 });
-}
+}}
 });
 }
 
@@ -81,15 +81,15 @@ this.afAuth.authState.subscribe(auth => {
         this.dataUser.ville = doc.get('ville');
         this.dataUser.pays = doc.get('pays');
         this.dataUser.description = doc.get('description');
-        this.dataUser.plaque = doc.get('plaque');
-        this.dataUser.profil = this.dataUser.profil.concat(auth.email);
-        this.dataUser.voiture = this.dataUser.profil;
-        this.dataUser.profil = this.dataUser.profil.concat('/profil.jpg');
-        this.dataUser.voiture = this.dataUser.voiture.concat('/Cars/' + this.dataUser.plaque + '/car1.jpg');
+        this.dataUser.profil = '/Users/' + auth.email + '/profil.jpg';
+        this.plaquelist = doc.get('plaque');
         this.getImageProfil();
-        if (this.dataUser.plaque.length !== 0){
-          this.getImagesStorage();
+        if (this.plaquelist.length !== 0){
           this.getPlaque();
+          for (let i = 0; i <= this.plaquelist.length; i++){
+            this.carlinklist[i] = '/Users/' + auth.email + '/Cars/' + this.plaquelist[i] + '/car1.jpg';
+          }
+          this.getImagesStorage();
         }
     } else {
         // doc.data() will be undefined in this case
@@ -102,49 +102,52 @@ this.afAuth.authState.subscribe(auth => {
 }
 
 
-  logout() {
-    this.afAuth.signOut();
-}
 
-  checkOBD() {
-    // tslint:disable-next-line: deprecation
-this.afAuth.authState.subscribe(auth => {
-  if (auth) {
-this.firestore.collection('OBD').doc(auth.email).get().toPromise().then((doc) => {
-  if (!doc.exists) {
-    this.hideOBD();
-}
-});
-}
-});
-}
-
-  hideOBD(){
-  const obd = (document.getElementById('buttonOBD') as HTMLInputElement);
-  obd.disabled = true;
-  const CarBox = (document.getElementById('CarBox') as HTMLInputElement);
-  CarBox.innerText = 'CarBox - Premium';
-}
 
   getImageProfil() {
-  this.afSG.ref(this.dataUser.profil).getDownloadURL().subscribe(imgUrl1 => {
+  this.afSG.ref(this.dataUser.profil).getDownloadURL().subscribe(imgUrl => {
     this.imagesP.push({
       name: 'Profil',
-      url: imgUrl1
+      url: imgUrl
     });
   });
 }
 
   getImagesStorage() {
-  this.afSG.ref(this.dataUser.voiture).getDownloadURL().subscribe(imgUrl2 => {
-    console.log(imgUrl2);
-    this.imagesV.push({
-      name: 'Voiture',
-      url: imgUrl2
+  for (let i = 0; i <= (this.plaquelist.length - 1); i++){
+    this.afSG.ref(this.carlinklist[i]).getDownloadURL().subscribe(imgUrl2 => {
+      this.imagesV.push({
+        name: 'Voiture',
+        url: imgUrl2
+      });
     });
-  });
+    }
+
 }
 
+logout() {
+  this.afAuth.signOut();
+}
+
+checkOBD() {
+  // tslint:disable-next-line: deprecation
+this.afAuth.authState.subscribe(auth => {
+if (auth) {
+this.firestore.collection('OBD').doc(auth.email).get().toPromise().then((doc) => {
+if (!doc.exists) {
+  this.hideOBD();
+}
+});
+}
+});
+}
+
+hideOBD(){
+const obd = (document.getElementById('buttonOBD') as HTMLInputElement);
+obd.disabled = true;
+const CarBox = (document.getElementById('CarBox') as HTMLInputElement);
+CarBox.innerText = 'CarBox - Premium';
+}
 }
 
 
